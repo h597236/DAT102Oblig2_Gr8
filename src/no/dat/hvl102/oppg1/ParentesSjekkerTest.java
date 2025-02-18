@@ -1,40 +1,41 @@
 package no.dat.hvl102.oppg1;
 
 import org.junit.jupiter.api.Test;
-
-import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.*;
-
-import java.util.Stack;
 
 public class ParentesSjekkerTest {
 
-    private final ParentesSjekker sjekker = new ParentesSjekker();
+    private ParentesSjekker sjekker = new ParentesSjekker();
 
     @Test
-    void testBalanserteParenteser() {
-        assertTrue(sjekker.sjekkParenteser("()"));
-        assertTrue(sjekker.sjekkParenteser("({[]})"));
-        assertTrue(sjekker.sjekkParenteser("{[()]}"));
-        assertTrue(sjekker.sjekkParenteser("((({}[])))"));
+    void testKorrektParenteser() {
+        assertTrue(sjekker.sjekkParenteser("{ [ ( ) ] }"));
     }
 
     @Test
-    void testUbalanserteParenteser() {
-        assertFalse(sjekker.sjekkParenteser("("));
-        assertFalse(sjekker.sjekkParenteser(")"));
-        assertFalse(sjekker.sjekkParenteser("({[})]"));
-        assertFalse(sjekker.sjekkParenteser("{[(()]}"));
-        assertFalse(sjekker.sjekkParenteser("(()))"));
+    void testManglerSluttParentes() {
+        assertFalse(sjekker.sjekkParenteser("{ [ ( ) }"));
     }
 
     @Test
-    void testTomStreng() {
-        assertTrue(sjekker.sjekkParenteser(""));
+    void testManglerStartParentes() {
+        assertFalse(sjekker.sjekkParenteser("[ ( ) ] }"));
     }
 
     @Test
-    void testIngenParenteser() {
-        assertTrue(sjekker.sjekkParenteser("Hello, World!"));
+    void testFeilrekkefølgeParenteser() {
+        assertFalse(sjekker.sjekkParenteser("{ [ ( ] ) }"));
+    }
+
+    @Test
+    void testJavaKode() {
+        String javaprogram = """
+        class HelloWorld {
+            public static void main(String[] args) {
+                System.out.println("Hello World!");
+            }
+        }
+        """;
+        assertTrue(sjekker.sjekkParenteser(javaprogram));
     }
 }
