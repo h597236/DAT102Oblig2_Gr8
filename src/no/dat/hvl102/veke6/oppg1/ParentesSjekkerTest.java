@@ -5,40 +5,37 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class ParentesSjekkerTest {
 
+    private ParentesSjekker sjekker = new ParentesSjekker();
+
     @Test
-    public void testKorrektParenteser() {
-        ParentesSjekker sjekker = new ParentesSjekker();
+    void testKorrektParenteser() {
         assertTrue(sjekker.sjekkParenteser("{ [ ( ) ] }"));
     }
 
     @Test
-    public void testManglerSluttparentes() {
-        ParentesSjekker sjekker = new ParentesSjekker();
+    void testManglerSluttParentes() {
         assertFalse(sjekker.sjekkParenteser("{ [ ( ) }"));
     }
 
     @Test
-    public void testManglerStartparentes() {
-        ParentesSjekker sjekker = new ParentesSjekker();
+    void testManglerStartParentes() {
         assertFalse(sjekker.sjekkParenteser("[ ( ) ] }"));
     }
 
     @Test
-    public void testSluttparentesForTidlig() {
-        ParentesSjekker sjekker = new ParentesSjekker();
+    void testFeilrekkefølgeParenteser() {
         assertFalse(sjekker.sjekkParenteser("{ [ ( ] ) }"));
     }
 
     @Test
-    public void testJavaProgram() {
-        ParentesSjekker sjekker = new ParentesSjekker();
+    void testJavaKode() {
         String javaprogram = """
-            class HelloWorld {
-                public static void main(String[] args) {
-                    System.out.println("Hello World!");
-                }
+        class HelloWorld {
+            public static void main(String[] args) {
+                System.out.println("Hello World!");
             }
-            """;
+        }
+        """;
         assertTrue(sjekker.sjekkParenteser(javaprogram));
     }
 }
