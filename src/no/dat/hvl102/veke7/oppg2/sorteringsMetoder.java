@@ -86,7 +86,6 @@ public class sorteringsMetoder {
     public static void measureSortTime(String sortType, Integer[] arr) {
         long startTime = System.nanoTime();
 
-        // Kall sorteringsmetode basert på sortType
         switch (sortType) {
             case "insertion":
                 insertionSort(arr);
